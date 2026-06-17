@@ -214,7 +214,13 @@
 <script>
     // ฟังก์ชันสร้างช่องกรอกชื่อผู้เล่น
     function generatePlayerInputs() {
-        const count = parseInt(document.getElementById('playerCount').value) || 4;
+        const countInput = document.getElementById('playerCount');
+        let count = parseInt(countInput.value);
+        
+        if (isNaN(count) || count < 4) {
+            count = 4;
+        }
+        
         const container = document.getElementById('playerInputs');
         container.innerHTML = '';
 
@@ -251,12 +257,6 @@
             players.push(name ? name : `มือ ${i}`);
         }
 
-        // สุ่มสลับตำแหน่งผู้เล่นเพื่อความโปร่งใส
-        for (let i = players.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [players[i], players[j]] = [players[j], players[i]];
-        }
-
         const matchScheduleDiv = document.getElementById('matchSchedule');
         matchScheduleDiv.innerHTML = '';
 
@@ -265,7 +265,7 @@
             return;
         }
 
-        // สร้างรายการคู่หูที่เป็นไปได้ทั้งหมด
+        // สร้างรายการคู่หูที่เป็นไปได้ทั้งหมด (Pairs)
         let pairs = [];
         for (let i = 0; i < players.length; i++) {
             for (let j = i + 1; j < players.length; j++) {
@@ -273,7 +273,7 @@
             }
         }
 
-        // สุ่มสลับคิวคู่หู
+        // สุ่มสลับคิวคู่หูเพื่อความกระจาย
         for (let i = pairs.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
@@ -291,8 +291,8 @@
                 const pairA = pairs[i];
                 const pairB = pairs[j];
 
-                // ตรวจสอบว่าใน 4 คนของแมตช์นี้ ไม่มีชื่อคนไหนซ้ำกันเลย
-                if (!pairA.includes(pairB[0]) && !pairA.includes(pairB[1])) {
+                // ตรวจสอบว่าไม่มีผู้เล่นคนใดซ้ำกันในแมตช์นี้ (สี่คนต้องไม่ซ้ำกัน)
+                if (pairA[0] !== pairB[0] && pairA[0] !== pairB[1] && pairA[1] !== pairB[0] && pairA[1] !== pairB[1]) {
                     const item = document.createElement('div');
                     item.className = 'match-item';
                     item.innerHTML = `
@@ -302,3 +302,4 @@
                             <span class="vs-label">VS</span>
                             <span class="team-name">${pairB[0]} + ${pairB[1]}</span>
                         </div>
+                    `;
