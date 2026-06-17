@@ -7,33 +7,29 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0b0f19; /* พื้นหลังสีดำเข้มสปอร์ต */
+            background-color: #f4f7f6;
             margin: 0;
             padding: 20px;
-            color: #f1f5f9;
+            color: #333;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: #111827; /* กล่องสีเทาเข้มดุดัน */
+            background: white;
             padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid #1f2937;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         h1, h2 {
             text-align: center;
-            color: #38bdf8; /* สีฟ้าไฟนีออน */
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: #2c3e50;
         }
         .section {
             margin-bottom: 25px;
             padding: 20px;
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            background: #1f2937; /* สีพื้นหลังการ์ด */
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #fafafa;
         }
         .grid-2 {
             display: grid;
@@ -42,125 +38,78 @@
         }
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: bold;
-            color: #94a3b8;
-            font-size: 14px;
+            color: #4a5568;
         }
         input[type="number"], input[type="text"] {
             width: 100%;
-            padding: 12px;
-            background-color: #111827;
-            border: 2px solid #334155;
-            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
             box-sizing: border-box;
             font-size: 16px;
-            color: #fff;
-            transition: all 0.2s ease;
-        }
-        input[type="number"]:focus, input[type="text"]:focus {
-            outline: none;
-            border-color: #38bdf8;
-            box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
-        }
-        /* ช่องใส่คะแนนผลการแข่ง */
-        input.score-input {
-            width: 65px;
-            text-align: center;
-            padding: 8px;
-            margin: 0 5px;
-            display: inline-block;
-            border: 2px solid #475569;
         }
         button {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            padding: 12px;
+            background-color: #3182ce;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+            transition: background 0.2s;
         }
         button:hover {
-            background: linear-gradient(135deg, #38bdf8, #0284c7);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(56, 189, 248, 0.4);
-        }
-        button:active {
-            transform: translateY(1px);
+            background-color: #2b6cb0;
         }
         .player-input-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
+            gap: 10px;
             margin-top: 15px;
         }
         .result-box {
-            background: #0f172a;
-            padding: 18px;
-            border-radius: 8px;
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 6px;
             margin-top: 15px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             text-align: center;
-            color: #4ade80; /* สีเขียวสะท้อนแสงดุดัน */
-            border: 1px dashed #22c55e;
-            text-shadow: 0 0 8px rgba(74, 222, 128, 0.2);
+            color: #2b6cb0;
         }
         .match-card {
-            background: #111827;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-left: 5px solid #4ade80; /* ขอบเขียวเลเซอร์ */
-            border-radius: 6px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 5px solid #48bb78;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            border-top: 1px solid #1f2937;
-            border-right: 1px solid #1f2937;
-            border-bottom: 1px solid #1f2937;
-        }
-        .team-zone {
-            display: flex;
             align-items: center;
         }
         .team {
             font-weight: 600;
-            color: #e2e8f0;
         }
         .vs {
-            color: #f43f5e; /* สีแดงสปอร์ต */
-            font-weight: 900;
-            margin: 0 12px;
-            font-style: italic;
-        }
-        .score-zone {
-            display: flex;
-            align-items: center;
-            background: #0f172a;
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: 1px solid #1f2937;
+            color: #e53e3e;
+            font-weight: bold;
+            margin: 0 10px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🏸 BADMINTON SQUAD</h1>
+    <h1>🏸 ระบบจัดก๊วนแบดมินตัน</h1>
 
     <!-- ส่วนที่ 1: คำนวณค่าใช้จ่าย -->
     <div class="section">
-        <h2>💰 COURT & SHUTTLE FEE</h2>
+        <h2>💰 คำนวณค่าสนามและค่าลูก</h2>
         <div class="grid-2">
             <div>
                 <label for="courtFee">ค่าสนามทั้งหมด (บาท):</label>
@@ -178,10 +127,10 @@
 
     <!-- ส่วนที่ 2: จัดการรายชื่อผู้เล่น -->
     <div class="section">
-        <h2>👥 PLAYERS LIST</h2>
+        <h2>👥 รายชื่อผู้เล่น</h2>
         <div style="margin-bottom: 15px;">
             <label for="playerCount">จำนวนคนทั้งหมดที่มาเล่น:</label>
-            <input type="number" id="playerCount" value="4" min="4" oninput="generatePlayerInputs()">
+            <input type="number" id="playerCount" value="4" min="4" onchange="generatePlayerInputs()">
         </div>
         <div class="player-input-list" id="playerInputs">
             <!-- ช่องใส่ชื่อจะถูกสร้างอัตโนมัติจาก JavaScript -->
@@ -189,13 +138,13 @@
     </div>
 
     <!-- ปุ่มสุ่มทีม -->
-    <button onclick="generateRoundRobinTeams()">🔀 RANDOM MATCHES</button>
+    <button onclick="generateRoundRobinTeams()">🔀 สุ่มทีมแบบพบกันหมด</button>
 
     <!-- ส่วนที่ 3: แสดงผลตารางแข่งขัน -->
     <div class="section" style="margin-top: 25px;">
-        <h2>🏸 MATCH SCHEDULE & SCORES</h2>
+        <h2>🏸 ตารางประกบคู่ (พบกันหมด)</h2>
         <div id="matchSchedule">
-            <p style="text-align: center; color: #64748b;">กดปุ่มด้านบนเพื่อเริ่มจัดทีม</p>
+            <p style="text-align: center; color: #a0aec0;">กดปุ่มด้านบนเพื่อเริ่มจัดทีม</p>
         </div>
     </div>
 </div>
@@ -203,11 +152,7 @@
 <script>
     // สร้างช่องใส่ชื่อผู้เล่นตามจำนวนที่ระบุ
     function generatePlayerInputs() {
-        const countInput = document.getElementById('playerCount');
-        let count = parseInt(countInput.value) || 4;
-        
-        if (count < 4) count = 4;
-        
+        const count = parseInt(document.getElementById('playerCount').value) || 4;
         const container = document.getElementById('playerInputs');
         container.innerHTML = '';
 
@@ -233,61 +178,94 @@
         document.getElementById('expenseResult').innerText = `ค่าใช้จ่ายต่อคน: ${perPerson.toFixed(2)} บาท`;
     }
 
-    // อัลกอริทึมสร้างแมตช์แบบพบกันหมดสไตล์ประเภทคู่ (แก้ไข Logic ดึงตัวแปรอาร์เรย์เรียบร้อย)
+    // อัลกอริทึมสร้างแมตช์แบบพบกันหมด (Round Robin สำหรับประเภทคู่)
     function generateRoundRobinTeams() {
         const playerCount = parseInt(document.getElementById('playerCount').value) || 4;
         let players = [];
 
         // ดึงชื่อผู้เล่นทั้งหมดมาใส่ Array
         for (let i = 1; i <= playerCount; i++) {
-            const nameEl = document.getElementById(`player_${i}`);
-            const name = nameEl ? nameEl.value.trim() : `ผู้เล่น ${i}`;
+            const name = document.getElementById(`player_${i}`).value.trim();
             players.push(name ? name : `ผู้เล่น ${i}`);
         }
 
-        // สุ่มสลับรายชื่อก่อน (Shuffle) เพื่อความโปร่งใส
+        // สุ่มสลับรายชื่อก่อน (Shuffle) เพื่อความแฟร์ในแต่ละครั้งที่กด
         for (let i = players.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            let temp = players[i];
-            players[i] = players[j];
-            players[j] = temp;
+            [players[i], players[j]] = [players[j], players[i]];
         }
 
         const matchScheduleDiv = document.getElementById('matchSchedule');
         matchScheduleDiv.innerHTML = '';
 
+        // ถ้าคนไม่พอเล่นประเภทคู่ (น้อยกว่า 4 คน)
         if (players.length < 4) {
-            matchScheduleDiv.innerHTML = '<p style="text-align:center; color:#ef4444; font-weight:bold;">จำเป็นต้องมีผู้เล่นอย่างน้อย 4 คนจึงจะจัดทีมคู่ได้</p>';
+            matchScheduleDiv.innerHTML = '<p style="text-align:center; color:red;">จำเป็นต้องมีผู้เล่นอย่างน้อย 4 คนจึงจะจัดทีมคู่ได้</p>';
             return;
         }
 
-        // 1. สร้างกลุ่มคู่หู 2 คน (Pairs) ทั้งหมดที่เป็นไปได้
-        let allPairs = [];
+        // สร้างคู่หูที่เป็นไปได้ทั้งหมด (All possible pairs)
+        let pairs = [];
         for (let i = 0; i < players.length; i++) {
             for (let j = i + 1; j < players.length; j++) {
-                allPairs.push([players[i], players[j]]);
+                pairs.push([players[i], players[j]]);
             }
         }
 
         // สุ่มสลับลำดับคู่หู
-        for (let i = allPairs.length - 1; i > 0; i--) {
+        for (let i = pairs.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            let tempPair = allPairs[i];
-            allPairs[i] = allPairs[j];
-            allPairs[j] = tempPair;
+            [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
         }
 
         let matchCount = 1;
         let usedPairs = new Set();
 
-        // 2. ตรวจสอบเงื่อนไขการนำคู่นักกีฬามาชนกัน โดยห้ามมีรายชื่อซ้ำซ้อนในสนามเดียวกันเด็ดขาด
-        for (let i = 0; i < allPairs.length; i++) {
+        // จับคู่แข่งขัน โดยเช็คไม่ให้มีคนซ้ำในแมตช์เดียวกัน และไม่ใช้คู่หูซ้ำ (ถ้าเป็นไปได้)
+        for (let i = 0; i < pairs.length; i++) {
             if (usedPairs.has(i)) continue;
 
-            for (let j = i + 1; j < allPairs.length; j++) {
+            for (let j = i + 1; j < pairs.length; j++) {
                 if (usedPairs.has(j)) continue;
 
-                const pairA = allPairs[i];
-                const pairB = allPairs[j];
+                const pairA = pairs[i];
+                const pairB = pairs[j];
 
-                // ตรวจสอบ Logic แยกรายบุคคล: คนที่ 1 และ 2 ของทีม A ต้องไม่ซ้ำกับคนที่ 1 และ 2 ของทีม B
+                // เช็คว่าไม่มีผู้เล่นซ้ำซ้อนกันใน 4 คนนี้
+                if (!pairA.includes(pairB[0]) && !pairA.includes(pairB[1])) {
+                    
+                    // สร้างการ์ดแสดงผลแมตช์
+                    const card = document.createElement('div');
+                    card.className = 'match-card';
+                    card.innerHTML = `
+                        <span><strong>แมตช์ที่ ${matchCount} :</strong></span>
+                        <div>
+                            <span class="team">${pairA[0]} + ${pairA[1]}</span>
+                            <span class="vs">VS</span>
+                            <span class="team">${pairB[0]} + ${pairB[1]}</span>
+                        </div>
+                    `;
+                    matchScheduleDiv.appendChild(card);
+
+                    usedPairs.add(i);
+                    usedPairs.add(j);
+                    matchCount++;
+                    break; 
+                }
+            }
+        }
+
+        // กรณีที่เหลือเศษหรือต้องการแมตช์เพิ่มเพื่อให้เล่นครบทุกคนเท่าๆ กันจริง
+        if(matchCount === 1) {
+            matchScheduleDiv.innerHTML = '<p style="text-align:center; color:orange;">ระะบบกำลังกระจายทีม กรุณากดสุ่มใหม่อีกครั้งเพื่อสลับคิว</p>';
+        }
+    }
+
+    // เรียกใช้งานครั้งแรกตอนโหลดหน้าเว็บ
+    window.onload = function() {
+        generatePlayerInputs();
+    };
+</script>
+
+</body>
+</html>
