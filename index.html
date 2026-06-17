@@ -63,7 +63,7 @@
             border-color: #38bdf8;
             box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
         }
-        /* ตกแต่งช่องใส่คะแนนผลการแข่ง */
+        /* ช่องใส่คะแนนผลการแข่ง */
         input.score-input {
             width: 65px;
             text-align: center;
@@ -181,7 +181,7 @@
         <h2>👥 PLAYERS LIST</h2>
         <div style="margin-bottom: 15px;">
             <label for="playerCount">จำนวนคนทั้งหมดที่มาเล่น:</label>
-            <input type="number" id="playerCount" value="4" min="4" onchange="generatePlayerInputs()">
+            <input type="number" id="playerCount" value="4" min="4" oninput="generatePlayerInputs()">
         </div>
         <div class="player-input-list" id="playerInputs">
             <!-- ช่องใส่ชื่อจะถูกสร้างอัตโนมัติจาก JavaScript -->
@@ -203,7 +203,11 @@
 <script>
     // สร้างช่องใส่ชื่อผู้เล่นตามจำนวนที่ระบุ
     function generatePlayerInputs() {
-        const count = parseInt(document.getElementById('playerCount').value) || 4;
+        const countInput = document.getElementById('playerCount');
+        let count = parseInt(countInput.value) || 4;
+        
+        if (count < 4) count = 4;
+        
         const container = document.getElementById('playerInputs');
         container.innerHTML = '';
 
@@ -229,62 +233,61 @@
         document.getElementById('expenseResult').innerText = `ค่าใช้จ่ายต่อคน: ${perPerson.toFixed(2)} บาท`;
     }
 
-    // อัลกอริทึมสร้างแมตช์แบบพบกันหมด
+    // อัลกอริทึมสร้างแมตช์แบบพบกันหมดสไตล์ประเภทคู่ (แก้ไข Logic ดึงตัวแปรอาร์เรย์เรียบร้อย)
     function generateRoundRobinTeams() {
         const playerCount = parseInt(document.getElementById('playerCount').value) || 4;
         let players = [];
 
         // ดึงชื่อผู้เล่นทั้งหมดมาใส่ Array
         for (let i = 1; i <= playerCount; i++) {
-            const name = document.getElementById(`player_${i}`).value.trim();
+            const nameEl = document.getElementById(`player_${i}`);
+            const name = nameEl ? nameEl.value.trim() : `ผู้เล่น ${i}`;
             players.push(name ? name : `ผู้เล่น ${i}`);
         }
 
-        // สุ่มสลับรายชื่อก่อน (Shuffle) เพื่อความแฟร์ในแต่ละครั้งที่กด
+        // สุ่มสลับรายชื่อก่อน (Shuffle) เพื่อความโปร่งใส
         for (let i = players.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [players[i], players[j]] = [players[j], players[i]];
+            let temp = players[i];
+            players[i] = players[j];
+            players[j] = temp;
         }
 
         const matchScheduleDiv = document.getElementById('matchSchedule');
         matchScheduleDiv.innerHTML = '';
 
-        // ถ้าคนไม่พอเล่นประเภทคู่ (น้อยกว่า 4 คน)
         if (players.length < 4) {
             matchScheduleDiv.innerHTML = '<p style="text-align:center; color:#ef4444; font-weight:bold;">จำเป็นต้องมีผู้เล่นอย่างน้อย 4 คนจึงจะจัดทีมคู่ได้</p>';
             return;
         }
 
-        // สร้างคู่หูที่เป็นไปได้ทั้งหมด (All possible pairs)
-        let pairs = [];
+        // 1. สร้างกลุ่มคู่หู 2 คน (Pairs) ทั้งหมดที่เป็นไปได้
+        let allPairs = [];
         for (let i = 0; i < players.length; i++) {
             for (let j = i + 1; j < players.length; j++) {
-                pairs.push([players[i], players[j]]);
+                allPairs.push([players[i], players[j]]);
             }
         }
 
         // สุ่มสลับลำดับคู่หู
-        for (let i = pairs.length - 1; i > 0; i--) {
+        for (let i = allPairs.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+            let tempPair = allPairs[i];
+            allPairs[i] = allPairs[j];
+            allPairs[j] = tempPair;
         }
 
         let matchCount = 1;
         let usedPairs = new Set();
 
-        // จับคู่แข่งขัน โดยเช็คไม่ให้มีคนซ้ำในแมตช์เดียวกัน และไม่ใช้คู่หูซ้ำ
-        for (let i = 0; i < pairs.length; i++) {
+        // 2. ตรวจสอบเงื่อนไขการนำคู่นักกีฬามาชนกัน โดยห้ามมีรายชื่อซ้ำซ้อนในสนามเดียวกันเด็ดขาด
+        for (let i = 0; i < allPairs.length; i++) {
             if (usedPairs.has(i)) continue;
 
-            for (let j = i + 1; j < pairs.length; j++) {
+            for (let j = i + 1; j < allPairs.length; j++) {
                 if (usedPairs.has(j)) continue;
 
-                const pairA = pairs[i];
-                const pairB = pairs[j];
+                const pairA = allPairs[i];
+                const pairB = allPairs[j];
 
-                // เช็คว่าไม่มีผู้เล่นซ้ำซ้อนกันใน 4 คนนี้
-                if (!pairA.includes(pairB[0]) && !pairA.includes(pairB[1])) {
-                    
-                    // สร้างการ์ดแสดงผลแมตช์ พร้อมเพิ่มกล่องกรอกคะแนน (Score Zone) ด้านขวา
-                    const card = document.createElement('div');
-                    card.className = 'match-card';
+                // ตรวจสอบ Logic แยกรายบุคคล: คนที่ 1 และ 2 ของทีม A ต้องไม่ซ้ำกับคนที่ 1 และ 2 ของทีม B
