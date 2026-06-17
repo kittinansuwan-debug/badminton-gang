@@ -64,7 +64,7 @@
             box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
         }
         input.score-input {
-            width: 60px;
+            width: 65px;
             text-align: center;
             padding: 8px;
             margin: 0 5px;
@@ -241,7 +241,7 @@
     // ตัวแปรเก็บข้อมูลแมตช์ปัจจุบันทั่วทั้งระบบ
     let globalMatches = [];
 
-    // ฟังก์ชันสร้างช่องกรอกชื่อผู้เล่นแบบเสถียร
+    // ฟังก์ชันสร้างช่องกรอกชื่อผู้เล่น
     function generatePlayerInputs() {
         const countInput = document.getElementById('playerCount');
         let count = parseInt(countInput.value) || 4;
@@ -259,9 +259,12 @@
             container.appendChild(div);
         }
         calculateExpenses();
-        // ซ่อนตารางคะแนนเมื่อเปลี่ยนจำนวนคน
-        document.getElementById('calcRankBtn').style.display = 'none';
-        document.getElementById('rankSection').style.display = 'none';
+        
+        // รีเซ็ตซ่อนส่วนแสดงคะแนนเก่าเมื่อปรับเปลี่ยนคน
+        const calcBtn = document.getElementById('calcRankBtn');
+        const rankSec = document.getElementById('rankSection');
+        if(calcBtn) calcBtn.style.display = 'none';
+        if(rankSec) rankSec.style.display = 'none';
     }
 
     // ฟังก์ชันคำนวณเงินค่าใช้จ่ายแบบเรียลไทม์
@@ -276,7 +279,7 @@
         document.getElementById('expenseResult').innerText = `ค่าใช้จ่ายต่อคน: ${perPerson.toFixed(2)} บาท`;
     }
 
-    // อัลกอริทึมจับคู่แข่งขันคู่อิงตาม Round Robin ที่แก้ไขแล้วให้ทำงาน 100%
+    // อัลกอริทึมสุ่มคิวประกบคู่ประเภทคู่แบบสมบูรณ์ แก้ไข Logic ไม่ให้เอเรอร์
     function generateRoundRobinTeams() {
         const playerCount = parseInt(document.getElementById('playerCount').value) || 4;
         let players = [];
@@ -292,7 +295,3 @@
         globalMatches = []; 
 
         if (players.length < 4) {
-            matchScheduleDiv.innerHTML = '<p style="text-align:center; color:#ef4444; font-weight:bold;">จำเป็นต้องมีผู้เล่นอย่างน้อย 4 คนจึงจะจัดทีมคู่ได้</p>';
-            return;
-        }
-
