@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0b0f19; /* พื้นหลังสีดำเข้มสปอร์ต */
+            background-color: #0b0f19;
             margin: 0;
             padding: 20px;
             color: #f1f5f9;
@@ -15,7 +15,7 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: #111827; /* กล่องสีเทาเข้มดุดัน */
+            background: #111827;
             padding: 30px;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -23,7 +23,7 @@
         }
         h1, h2 {
             text-align: center;
-            color: #38bdf8; /* สีฟ้าไฟนีออน */
+            color: #38bdf8;
             text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -33,7 +33,7 @@
             padding: 20px;
             border: 1px solid #1f2937;
             border-radius: 12px;
-            background: #1f2937; /* สีพื้นหลังการ์ด */
+            background: #1f2937;
         }
         .grid-2 {
             display: grid;
@@ -63,17 +63,16 @@
             border-color: #38bdf8;
             box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
         }
-        .score-input {
-            width: 60px !important;
+        input.score-input {
+            width: 60px;
             text-align: center;
-            padding: 8px !important;
+            padding: 8px;
             margin: 0 5px;
             display: inline-block;
         }
         button {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: white;
             border: none;
             border-radius: 8px;
@@ -83,19 +82,33 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: all 0.2s ease;
+            margin-bottom: 10px;
+        }
+        .btn-blue {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
         }
-        button:hover {
+        .btn-blue:hover {
             background: linear-gradient(135deg, #38bdf8, #0284c7);
-            transform: translateY(-1px);
             box-shadow: 0 6px 15px rgba(56, 189, 248, 0.4);
+        }
+        .btn-green {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+        }
+        .btn-green:hover {
+            background: linear-gradient(135deg, #4ade80, #16a34a);
+            box-shadow: 0 6px 15px rgba(74, 222, 128, 0.4);
+        }
+        button:hover {
+            transform: translateY(-1px);
         }
         button:active {
             transform: translateY(1px);
         }
         .player-input-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 12px;
             margin-top: 15px;
         }
@@ -107,7 +120,7 @@
             font-size: 20px;
             font-weight: bold;
             text-align: center;
-            color: #4ade80; /* สีเขียวสะท้อนแสงดุดัน */
+            color: #4ade80;
             border: 1px dashed #22c55e;
             text-shadow: 0 0 8px rgba(74, 222, 128, 0.2);
         }
@@ -118,17 +131,11 @@
             border-left: 5px solid #38bdf8;
             border-radius: 6px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border: 1px solid #1f2937;
+            border-top: 1px solid #1f2937;
+            border-right: 1px solid #1f2937;
+            border-bottom: 1px solid #1f2937;
         }
-        .match-header {
-            font-weight: bold;
-            color: #38bdf8;
-            font-size: 14px;
-        }
-        .match-body {
+        .match-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -138,57 +145,40 @@
         .team {
             font-weight: 600;
             color: #e2e8f0;
-            font-size: 15px;
-        }
-        .vs-zone {
-            display: flex;
-            align-items: center;
         }
         .vs {
-            color: #f43f5e; /* สีแดงสปอร์ต */
+            color: #f43f5e;
             font-weight: 900;
-            margin: 0 10px;
+            margin: 0 12px;
             font-style: italic;
         }
-        /* ตารางอันดับ */
-        .leaderboard-table {
+        .score-zone {
+            display: flex;
+            align-items: center;
+            background: #0f172a;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+        .rank-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            background-color: #111827;
-            border-radius: 8px;
-            overflow: hidden;
+            margin-top: 10px;
+            text-align: left;
         }
-        .leaderboard-table th, .leaderboard-table td {
-            padding: 12px 15px;
-            text-align: center;
+        .rank-table th, .rank-table td {
+            padding: 12px;
+            border-bottom: 1px solid #334155;
         }
-        .leaderboard-table th {
-            background-color: #1f2937;
+        .rank-table th {
             color: #38bdf8;
-            font-weight: bold;
-            border-bottom: 2px solid #334155;
+            background-color: #0f172a;
         }
-        .leaderboard-table tr {
-            border-bottom: 1px solid #1f2937;
+        .rank-table tr:hover {
+            background-color: #111827;
         }
-        .leaderboard-table tr:last-child {
-            border-bottom: none;
-        }
-        .top-player {
-            color: #4ade80 !important;
-            font-weight: bold;
-        }
-        .badge-winner {
-            background-color: #22c55e;
-            color: #0f172a;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: bold;
-            margin-left: 5px;
-            vertical-align: middle;
-        }
+        .podium-1 { color: #f59e0b; font-weight: bold; }
+        .podium-2 { color: #cbd5e1; font-weight: bold; }
+        .podium-3 { color: #b45309; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -210,7 +200,7 @@
             </div>
         </div>
         <div class="result-box" id="expenseResult">
-            ค่าใช้จ่ายต่อคน: 0 บาท
+            ค่าใช้จ่ายต่อคน: 0.00 บาท
         </div>
     </div>
 
@@ -219,7 +209,7 @@
         <h2>👥 PLAYERS LIST</h2>
         <div style="margin-bottom: 15px;">
             <label for="playerCount">จำนวนคนทั้งหมดที่มาเล่น:</label>
-            <input type="number" id="playerCount" value="4" min="4" onchange="generatePlayerInputs()">
+            <input type="number" id="playerCount" value="4" min="4" oninput="generatePlayerInputs()">
         </div>
         <div class="player-input-list" id="playerInputs">
             <!-- ช่องใส่ชื่อจะถูกสร้างอัตโนมัติจาก JavaScript -->
@@ -227,60 +217,54 @@
     </div>
 
     <!-- ปุ่มสุ่มทีม -->
-    <button onclick="generateRoundRobinTeams()">🔀 RANDOM MATCHES</button>
+    <button class="btn-blue" onclick="generateRoundRobinTeams()">🔀 RANDOM MATCHES (สุ่มคู่แข่ง)</button>
 
     <!-- ส่วนที่ 3: แสดงผลตารางแข่งขัน -->
     <div class="section" style="margin-top: 25px;">
         <h2>🏸 MATCH SCHEDULE & SCORES</h2>
-        <p style="color: #94a3b8; font-size: 13px; margin-top: -10px; margin-bottom: 15px; text-align: center;">กรอกคะแนนดิบลงในช่อง ระบบจะคำนวณผู้ชนะและแต้มได้เสียให้ด้านล่างอัตโนมัติ</p>
         <div id="matchSchedule">
-            <p style="text-align: center; color: #64748b;">กดปุ่มด้านบนเพื่อเริ่มจัดทีม</p>
+            <p style="text-align: center; color: #64748b;">กรอกรายชื่อแล้วกดปุ่ม "สุ่มคู่แข่ง" ด้านบนได้เลย!</p>
         </div>
     </div>
 
-    <!-- ส่วนที่ 4: ตารางสรุปคะแนนรวม -->
-    <div class="section">
-        <h2>🏆 LEADERBOARD</h2>
-        <table class="leaderboard-table">
-            <thead>
-                <tr>
-                    <th>อันดับ</th>
-                    <th>ชื่อผู้เล่น</th>
-                    <th>ชนะ (แมตช์)</th>
-                    <th>คะแนนดิบสะสม</th>
-                </tr>
-            </thead>
-            <tbody id="leaderboardBody">
-                <tr>
-                    <td colspan="4" style="color: #64748b;">ยังไม่มีข้อมูลการแข่งขัน</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- ปุ่มคำนวณและจัดอันดับ -->
+    <button class="btn-green" id="calcRankBtn" style="display:none;" onclick="calculateRankings()">📊 CALCULATE RANKINGS (สรุปและจัดอันดับ)</button>
+
+    <!-- ส่วนที่ 4: ตารางอันดับผู้ชนะ -->
+    <div class="section" id="rankSection" style="display:none; margin-top: 25px;">
+        <h2>🏆 LEADERBOARD (อันดับก๊วนวันนี้)</h2>
+        <div id="rankResult"></div>
     </div>
 </div>
 
 <script>
-    // เก็บโครงสร้างแมตช์ปัจจุบันทั่วโลกของหน้าเว็บเพื่อใช้คำนวณคะแนน
-    let currentMatches = [];
+    // ตัวแปรเก็บข้อมูลแมตช์ปัจจุบันทั่วทั้งระบบ
+    let globalMatches = [];
 
-    // สร้างช่องใส่ชื่อผู้เล่นตามจำนวนที่ระบุ
+    // ฟังก์ชันสร้างช่องกรอกชื่อผู้เล่นแบบเสถียร
     function generatePlayerInputs() {
-        const count = parseInt(document.getElementById('playerCount').value) || 4;
+        const countInput = document.getElementById('playerCount');
+        let count = parseInt(countInput.value) || 4;
+        
+        if (count < 4) count = 4;
+        
         const container = document.getElementById('playerInputs');
         container.innerHTML = '';
 
         for (let i = 1; i <= count; i++) {
             const div = document.createElement('div');
             div.innerHTML = `
-                <input type="text" id="player_${i}" value="ผู้เล่น ${i}" placeholder="ชื่อคนที่ ${i}" oninput="updateLeaderboard()">
+                <input type="text" id="player_${i}" value="มือ ${i}" placeholder="ชื่อคนที่ ${i}">
             `;
             container.appendChild(div);
         }
         calculateExpenses();
-        updateLeaderboard();
+        // ซ่อนตารางคะแนนเมื่อเปลี่ยนจำนวนคน
+        document.getElementById('calcRankBtn').style.display = 'none';
+        document.getElementById('rankSection').style.display = 'none';
     }
 
-    // คำนวณค่าใช้จ่ายหารเท่ากันทุกคน
+    // ฟังก์ชันคำนวณเงินค่าใช้จ่ายแบบเรียลไทม์
     function calculateExpenses() {
         const courtFee = parseFloat(document.getElementById('courtFee').value) || 0;
         const shuttleFee = parseFloat(document.getElementById('shuttleFee').value) || 0;
@@ -292,13 +276,23 @@
         document.getElementById('expenseResult').innerText = `ค่าใช้จ่ายต่อคน: ${perPerson.toFixed(2)} บาท`;
     }
 
-    // อัลกอริทึมสร้างแมตช์แบบพบกันหมด (Round Robin สำหรับประเภทคู่)
+    // อัลกอริทึมจับคู่แข่งขันคู่อิงตาม Round Robin ที่แก้ไขแล้วให้ทำงาน 100%
     function generateRoundRobinTeams() {
         const playerCount = parseInt(document.getElementById('playerCount').value) || 4;
         let players = [];
 
         for (let i = 1; i <= playerCount; i++) {
-            const name = document.getElementById(`player_${i}`).value.trim();
-            players.push(name ? name : `ผู้เล่น ${i}`);
+            const nameEl = document.getElementById(`player_${i}`);
+            const name = nameEl ? nameEl.value.trim() : `มือ ${i}`;
+            players.push(name ? name : `มือ ${i}`);
+        }
+
+        const matchScheduleDiv = document.getElementById('matchSchedule');
+        matchScheduleDiv.innerHTML = '';
+        globalMatches = []; 
+
+        if (players.length < 4) {
+            matchScheduleDiv.innerHTML = '<p style="text-align:center; color:#ef4444; font-weight:bold;">จำเป็นต้องมีผู้เล่นอย่างน้อย 4 คนจึงจะจัดทีมคู่ได้</p>';
+            return;
         }
 
