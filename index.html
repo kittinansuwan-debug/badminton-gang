@@ -192,7 +192,7 @@
         <h2>👥 รายชื่อก๊วนตีแบด</h2>
         <div style="margin-bottom: 15px;">
             <label>จำนวนคนที่มาวันนี้ (คน)</label>
-            <input type="number" id="playerCount" value="4" min="4" onchange="generatePlayerInputs()">
+            <input type="number" id="playerCount" value="4" min="4" oninput="generatePlayerInputs()">
         </div>
         <div class="player-list" id="playerInputs"></div>
     </div>
@@ -212,6 +212,7 @@
 </div>
 
 <script>
+    // ฟังก์ชันสร้างช่องกรอกชื่อผู้เล่น
     function generatePlayerInputs() {
         const count = parseInt(document.getElementById('playerCount').value) || 4;
         const container = document.getElementById('playerInputs');
@@ -227,6 +228,7 @@
         calculateExpenses();
     }
 
+    // ฟังก์ชันคำนวณเงินค่าใช้จ่าย
     function calculateExpenses() {
         const courtFee = parseFloat(document.getElementById('courtFee').value) || 0;
         const shuttleFee = parseFloat(document.getElementById('shuttleFee').value) || 0;
@@ -238,15 +240,18 @@
         document.getElementById('expenseResult').innerText = `หารเฉลี่ย: ${perPerson.toFixed(2)} บาท / คน`;
     }
 
+    // ฟังก์ชันสุ่มคู่แข่งขันพบกันหมดประเภทคู่
     function generateRoundRobinTeams() {
         const playerCount = parseInt(document.getElementById('playerCount').value) || 4;
         let players = [];
 
         for (let i = 1; i <= playerCount; i++) {
-            const name = document.getElementById(`player_${i}`).value.trim();
+            const nameEl = document.getElementById(`player_${i}`);
+            const name = nameEl ? nameEl.value.trim() : `มือ ${i}`;
             players.push(name ? name : `มือ ${i}`);
         }
 
+        // สุ่มสลับตำแหน่งผู้เล่นเพื่อความโปร่งใส
         for (let i = players.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [players[i], players[j]] = [players[j], players[i]];
@@ -260,6 +265,7 @@
             return;
         }
 
+        // สร้างรายการคู่หูที่เป็นไปได้ทั้งหมด
         let pairs = [];
         for (let i = 0; i < players.length; i++) {
             for (let j = i + 1; j < players.length; j++) {
@@ -267,6 +273,7 @@
             }
         }
 
+        // สุ่มสลับคิวคู่หู
         for (let i = pairs.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
@@ -284,25 +291,14 @@
                 const pairA = pairs[i];
                 const pairB = pairs[j];
 
+                // ตรวจสอบว่าใน 4 คนของแมตช์นี้ ไม่มีชื่อคนไหนซ้ำกันเลย
                 if (!pairA.includes(pairB[0]) && !pairA.includes(pairB[1])) {
                     const item = document.createElement('div');
                     item.className = 'match-item';
                     item.innerHTML = `
                         <span class="match-number">คู่ที่ ${matchCount}</span>
                         <div class="versus-box">
-                            <span class="team-name">${pairA[0]}+${pairA[1]}</span>
+                            <span class="team-name">${pairA[0]} + ${pairA[1]}</span>
                             <span class="vs-label">VS</span>
-                            <span class="team-name">${pairB[0]}+${pairB[1]}</span>
+                            <span class="team-name">${pairB[0]} + ${pairB[1]}</span>
                         </div>
-                    `;
-                    matchScheduleDiv.appendChild(item);
-
-                    usedPairs.add(i);
-                    usedPairs.add(j);
-                    matchCount++;
-                    break; 
-                }
-            }
-        }
-
-        if(matchCount === 1) {
