@@ -3,33 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>พัทยา Badminton</title>
+    <title>🏸 Pattaya Badminton Club</title>
     <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #0284c7;
+            --accent: #38bdf8;
+            --neon-green: #4ade80;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            background-color: var(--bg-color);
             margin: 0;
-            padding: 20px;
-            color: #333;
+            padding: 15px;
+            color: var(--text-main);
         }
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        h1, h2 {
+        .header {
             text-align: center;
-            color: #2c3e50;
+            padding: 20px 0;
         }
-        .section {
-            margin-bottom: 25px;
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+        .header p {
+            margin: 5px 0 0 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .card {
+            background: var(--card-bg);
             padding: 20px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            background: #fafafa;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .card h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: var(--accent);
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
         }
         .grid-2 {
             display: grid;
@@ -38,119 +63,155 @@
         }
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #4a5568;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: var(--text-muted);
         }
         input[type="number"], input[type="text"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e0;
-            border-radius: 6px;
+            padding: 12px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
             box-sizing: border-box;
             font-size: 16px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #3182ce;
             color: white;
+            transition: all 0.2s;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+        .total-box {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        }
+        .player-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+        }
+        button.btn-action {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--neon-green);
+            color: #0f172a;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 16px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.1s, background-color 0.2s;
+            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
         }
-        button:hover {
-            background-color: #2b6cb0;
+        button.btn-action:active {
+            transform: scale(0.98);
         }
-        .player-input-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
+        button.btn-action:hover {
+            background-color: #22c55e;
         }
-        .result-box {
-            background: #edf2f7;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            color: #2b6cb0;
-        }
-        .match-card {
-            background: white;
-            padding: 12px;
+        .match-item {
+            background: #0f172a;
+            padding: 14px;
             margin-bottom: 10px;
-            border-left: 5px solid #48bb78;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .team {
-            font-weight: 600;
+        .match-number {
+            font-size: 12px;
+            background: #334155;
+            padding: 3px 8px;
+            border-radius: 20px;
+            color: var(--text-muted);
         }
-        .vs {
-            color: #e53e3e;
+        .versus-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+        .team-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .vs-label {
+            color: #ef4444;
+            font-style: italic;
             font-weight: bold;
-            margin: 0 10px;
+            font-size: 13px;
+        }
+        .empty-text {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            padding: 20px 0;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🏸 ระบบจัดก๊วนแบดมินตัน</h1>
+    <div class="header">
+        <h1>🏸 PARTY BADMINTON</h1>
+        <p>ระบบคำนวณค่าคอร์ทและจัดทีมพบกันหมด</p>
+    </div>
 
-    <!-- ส่วนที่ 1: คำนวณค่าใช้จ่าย -->
-    <div class="section">
-        <h2>💰 คำนวณค่าสนามและค่าลูก</h2>
+    <!-- ส่วนที่ 1: การเงิน -->
+    <div class="card">
+        <h2>💰 รายละเอียดค่าใช้จ่าย</h2>
         <div class="grid-2">
             <div>
-                <label for="courtFee">ค่าสนามทั้งหมด (บาท):</label>
+                <label>ค่าสนามทั้งหมด (บาท)</label>
                 <input type="number" id="courtFee" value="0" min="0" oninput="calculateExpenses()">
             </div>
             <div>
-                <label for="shuttleFee">ค่าลูกแบดทั้งหมด (บาท):</label>
+                <label>ค่าลูกแบดทั้งหมด (บาท)</label>
                 <input type="number" id="shuttleFee" value="0" min="0" oninput="calculateExpenses()">
             </div>
         </div>
-        <div class="result-box" id="expenseResult">
-            ค่าใช้จ่ายต่อคน: 0 บาท
+        <div class="total-box" id="expenseResult">
+            หารเฉลี่ย: 0.00 บาท / คน
         </div>
     </div>
 
-    <!-- ส่วนที่ 2: จัดการรายชื่อผู้เล่น -->
-    <div class="section">
-        <h2>👥 รายชื่อผู้เล่น</h2>
+    <!-- ส่วนที่ 2: สมาชิก -->
+    <div class="card">
+        <h2>👥 รายชื่อก๊วนตีแบด</h2>
         <div style="margin-bottom: 15px;">
-            <label for="playerCount">จำนวนคนทั้งหมดที่มาเล่น:</label>
+            <label>จำนวนคนที่มาวันนี้ (คน)</label>
             <input type="number" id="playerCount" value="4" min="4" onchange="generatePlayerInputs()">
         </div>
-        <div class="player-input-list" id="playerInputs">
-            <!-- ช่องใส่ชื่อจะถูกสร้างอัตโนมัติจาก JavaScript -->
-        </div>
+        <div class="player-list" id="playerInputs"></div>
     </div>
 
-    <!-- ปุ่มสุ่มทีม -->
-    <button onclick="generateRoundRobinTeams()">🔀 สุ่มทีมแบบพบกันหมด</button>
+    <!-- ปุ่มกด -->
+    <div style="margin-bottom: 20px;">
+        <button class="btn-action" onclick="generateRoundRobinTeams()">🔀 สุ่มทีมพบกันหมด</button>
+    </div>
 
-    <!-- ส่วนที่ 3: แสดงผลตารางแข่งขัน -->
-    <div class="section" style="margin-top: 25px;">
-        <h2>🏸 ตารางประกบคู่ (พบกันหมด)</h2>
+    <!-- ส่วนที่ 3: ตารางแข่ง -->
+    <div class="card">
+        <h2>📅 ตารางประกบคู่แข่งขัน</h2>
         <div id="matchSchedule">
-            <p style="text-align: center; color: #a0aec0;">กดปุ่มด้านบนเพื่อเริ่มจัดทีม</p>
+            <div class="empty-text">กรอกรายชื่อแล้วกดปุ่ม "สุ่มทีม" ด้านบนได้เลย!</div>
         </div>
     </div>
 </div>
 
 <script>
-    // สร้างช่องใส่ชื่อผู้เล่นตามจำนวนที่ระบุ
     function generatePlayerInputs() {
         const count = parseInt(document.getElementById('playerCount').value) || 4;
         const container = document.getElementById('playerInputs');
@@ -159,14 +220,13 @@
         for (let i = 1; i <= count; i++) {
             const div = document.createElement('div');
             div.innerHTML = `
-                <input type="text" id="player_${i}" value="ผู้เล่น ${i}" placeholder="ชื่อคนที่ ${i}">
+                <input type="text" id="player_${i}" value="มือ ${i}" placeholder="ชื่อคนที่ ${i}">
             `;
             container.appendChild(div);
         }
         calculateExpenses();
     }
 
-    // คำนวณค่าใช้จ่ายหารเท่ากันทุกคน
     function calculateExpenses() {
         const courtFee = parseFloat(document.getElementById('courtFee').value) || 0;
         const shuttleFee = parseFloat(document.getElementById('shuttleFee').value) || 0;
@@ -175,21 +235,18 @@
         const total = courtFee + shuttleFee;
         const perPerson = total / playerCount;
 
-        document.getElementById('expenseResult').innerText = `ค่าใช้จ่ายต่อคน: ${perPerson.toFixed(2)} บาท`;
+        document.getElementById('expenseResult').innerText = `หารเฉลี่ย: ${perPerson.toFixed(2)} บาท / คน`;
     }
 
-    // อัลกอริทึมสร้างแมตช์แบบพบกันหมด (Round Robin สำหรับประเภทคู่)
     function generateRoundRobinTeams() {
         const playerCount = parseInt(document.getElementById('playerCount').value) || 4;
         let players = [];
 
-        // ดึงชื่อผู้เล่นทั้งหมดมาใส่ Array
         for (let i = 1; i <= playerCount; i++) {
             const name = document.getElementById(`player_${i}`).value.trim();
-            players.push(name ? name : `ผู้เล่น ${i}`);
+            players.push(name ? name : `มือ ${i}`);
         }
 
-        // สุ่มสลับรายชื่อก่อน (Shuffle) เพื่อความแฟร์ในแต่ละครั้งที่กด
         for (let i = players.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [players[i], players[j]] = [players[j], players[i]];
@@ -198,13 +255,11 @@
         const matchScheduleDiv = document.getElementById('matchSchedule');
         matchScheduleDiv.innerHTML = '';
 
-        // ถ้าคนไม่พอเล่นประเภทคู่ (น้อยกว่า 4 คน)
         if (players.length < 4) {
-            matchScheduleDiv.innerHTML = '<p style="text-align:center; color:red;">จำเป็นต้องมีผู้เล่นอย่างน้อย 4 คนจึงจะจัดทีมคู่ได้</p>';
+            matchScheduleDiv.innerHTML = '<div class="empty-text" style="color:#f87171;">ต้องมีผู้เล่นอย่างน้อย 4 คนขึ้นไปครับ</div>';
             return;
         }
 
-        // สร้างคู่หูที่เป็นไปได้ทั้งหมด (All possible pairs)
         let pairs = [];
         for (let i = 0; i < players.length; i++) {
             for (let j = i + 1; j < players.length; j++) {
@@ -212,7 +267,6 @@
             }
         }
 
-        // สุ่มสลับลำดับคู่หู
         for (let i = pairs.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
@@ -221,7 +275,6 @@
         let matchCount = 1;
         let usedPairs = new Set();
 
-        // จับคู่แข่งขัน โดยเช็คไม่ให้มีคนซ้ำในแมตช์เดียวกัน และไม่ใช้คู่หูซ้ำ (ถ้าเป็นไปได้)
         for (let i = 0; i < pairs.length; i++) {
             if (usedPairs.has(i)) continue;
 
@@ -231,21 +284,18 @@
                 const pairA = pairs[i];
                 const pairB = pairs[j];
 
-                // เช็คว่าไม่มีผู้เล่นซ้ำซ้อนกันใน 4 คนนี้
                 if (!pairA.includes(pairB[0]) && !pairA.includes(pairB[1])) {
-                    
-                    // สร้างการ์ดแสดงผลแมตช์
-                    const card = document.createElement('div');
-                    card.className = 'match-card';
-                    card.innerHTML = `
-                        <span><strong>แมตช์ที่ ${matchCount} :</strong></span>
-                        <div>
-                            <span class="team">${pairA[0]} + ${pairA[1]}</span>
-                            <span class="vs">VS</span>
-                            <span class="team">${pairB[0]} + ${pairB[1]}</span>
+                    const item = document.createElement('div');
+                    item.className = 'match-item';
+                    item.innerHTML = `
+                        <span class="match-number">คู่ที่ ${matchCount}</span>
+                        <div class="versus-box">
+                            <span class="team-name">${pairA[0]}+${pairA[1]}</span>
+                            <span class="vs-label">VS</span>
+                            <span class="team-name">${pairB[0]}+${pairB[1]}</span>
                         </div>
                     `;
-                    matchScheduleDiv.appendChild(card);
+                    matchScheduleDiv.appendChild(item);
 
                     usedPairs.add(i);
                     usedPairs.add(j);
@@ -255,17 +305,4 @@
             }
         }
 
-        // กรณีที่เหลือเศษหรือต้องการแมตช์เพิ่มเพื่อให้เล่นครบทุกคนเท่าๆ กันจริง
         if(matchCount === 1) {
-            matchScheduleDiv.innerHTML = '<p style="text-align:center; color:orange;">ระะบบกำลังกระจายทีม กรุณากดสุ่มใหม่อีกครั้งเพื่อสลับคิว</p>';
-        }
-    }
-
-    // เรียกใช้งานครั้งแรกตอนโหลดหน้าเว็บ
-    window.onload = function() {
-        generatePlayerInputs();
-    };
-</script>
-
-</body>
-</html>
