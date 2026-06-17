@@ -98,6 +98,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 10px;
+            margin-top: 15px;
         }
         button.btn-action {
             width: 100%;
@@ -190,11 +191,13 @@
     <!-- ส่วนที่ 2: สมาชิก -->
     <div class="card">
         <h2>👥 รายชื่อก๊วนตีแบด</h2>
-        <div style="margin-bottom: 15px;">
+        <div>
             <label>จำนวนคนที่มาวันนี้ (คน)</label>
             <input type="number" id="playerCount" value="4" min="4" oninput="generatePlayerInputs()">
         </div>
-        <div class="player-list" id="playerInputs"></div>
+        <div class="player-list" id="playerInputs">
+            <!-- ช่องใส่ชื่อผู้เล่นจะถูกสร้างโดย JavaScript ตรงนี้ -->
+        </div>
     </div>
 
     <!-- ปุ่มกด -->
@@ -212,14 +215,12 @@
 </div>
 
 <script>
-    // ฟังก์ชันสร้างช่องกรอกชื่อผู้เล่น
+    // ฟังก์ชันสร้างช่องกรอกชื่อผู้เล่นแบบเสถียร
     function generatePlayerInputs() {
         const countInput = document.getElementById('playerCount');
-        let count = parseInt(countInput.value);
+        let count = parseInt(countInput.value) || 4;
         
-        if (isNaN(count) || count < 4) {
-            count = 4;
-        }
+        if (count < 4) count = 4;
         
         const container = document.getElementById('playerInputs');
         container.innerHTML = '';
@@ -246,7 +247,7 @@
         document.getElementById('expenseResult').innerText = `หารเฉลี่ย: ${perPerson.toFixed(2)} บาท / คน`;
     }
 
-    // ฟังก์ชันสุ่มคู่แข่งขันพบกันหมดประเภทคู่
+    // ฟังก์ชันสุ่มคู่แข่งขันพบกันหมดเวอร์ชันแก้ไขใหม่ ป้องกันเบราว์เซอร์ค้าง
     function generateRoundRobinTeams() {
         const playerCount = parseInt(document.getElementById('playerCount').value) || 4;
         let players = [];
@@ -265,41 +266,39 @@
             return;
         }
 
-        // สร้างรายการคู่หูที่เป็นไปได้ทั้งหมด (Pairs)
-        let pairs = [];
+        // 1. สร้างคู่นักกีฬา (Pairs) ที่เป็นไปได้ทั้งหมดแบบไม่ซ้ำกัน
+        let allPairs = [];
         for (let i = 0; i < players.length; i++) {
             for (let j = i + 1; j < players.length; j++) {
-                pairs.push([players[i], players[j]]);
+                allPairs.push([players[i], players[j]]);
             }
         }
 
-        // สุ่มสลับคิวคู่หูเพื่อความกระจาย
-        for (let i = pairs.length - 1; i > 0; i--) {
+        // สุ่มลำดับของคู่หูทั้งหมด (Shuffle Pairs)
+        for (let i = allPairs.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+            [allPairs[i], allPairs[j]] = [allPairs[j], allPairs[i]];
         }
 
         let matchCount = 1;
-        let usedPairs = new Set();
+        let usedPairsIndexes = new Set();
 
-        for (let i = 0; i < pairs.length; i++) {
-            if (usedPairs.has(i)) continue;
+        // 2. จับคู่นักกีฬา 2 กลุ่มมาเจอกันในสนาม โดยเช็คไม่ให้มีชื่อคนซ้ำกันในแมตช์นั้น
+        for (let i = 0; i < allPairs.length; i++) {
+            if (usedPairsIndexes.has(i)) continue;
 
-            for (let j = i + 1; j < pairs.length; j++) {
-                if (usedPairs.has(j)) continue;
+            for (let j = i + 1; j < allPairs.length; j++) {
+                if (usedPairsIndexes.has(j)) continue;
 
-                const pairA = pairs[i];
-                const pairB = pairs[j];
+                const pairA = allPairs[i];
+                const pairB = allPairs[j];
 
-                // ตรวจสอบว่าไม่มีผู้เล่นคนใดซ้ำกันในแมตช์นี้ (สี่คนต้องไม่ซ้ำกัน)
-                if (pairA[0] !== pairB[0] && pairA[0] !== pairB[1] && pairA[1] !== pairB[0] && pairA[1] !== pairB[1]) {
+                // เช็คอย่างละเอียด: คนใน pairA ทั้ง 2 คน ต้องไม่ซ้ำกับคนใน pairB ทั้ง 2 คน
+                if (pairA[0] !== pairB[0] && pairA[0] !== pairB[1] && 
+                    pairA[1] !== pairB[0] && pairA[1] !== pairB[1]) {
+                    
                     const item = document.createElement('div');
                     item.className = 'match-item';
                     item.innerHTML = `
                         <span class="match-number">คู่ที่ ${matchCount}</span>
                         <div class="versus-box">
-                            <span class="team-name">${pairA[0]} + ${pairA[1]}</span>
-                            <span class="vs-label">VS</span>
-                            <span class="team-name">${pairB[0]} + ${pairB[1]}</span>
-                        </div>
-                    `;
